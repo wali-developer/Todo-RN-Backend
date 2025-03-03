@@ -6,7 +6,7 @@ const Todo = require("../models/todo");
 
 module.exports.getTodos = async (req, res) => {
   try {
-    const { search, limit = 10 } = req.query;
+    const { search, status, limit = 10 } = req.query;
 
     const query = {
       ...(search && {
@@ -17,6 +17,10 @@ module.exports.getTodos = async (req, res) => {
         ],
       }),
     };
+
+    if (status) {
+      query.status = status;
+    }
 
     const todos = await Todo.find(query).limit(limit);
     return SuccessResponse(res, todos);
