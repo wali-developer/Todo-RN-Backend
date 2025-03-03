@@ -36,7 +36,7 @@ module.exports.AddTodo = async (req, res) => {
       return ErrorResponse(res, "The given todo is already exist.", 422);
     }
 
-    const todo = Todo(req.body);
+    const todo = Todo({ ...req.body, status: "todo" });
     await todo.save();
 
     return SuccessResponse(res, { todo });
